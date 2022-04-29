@@ -1,0 +1,105 @@
+#app,
+html,
+body {
+	height: 100%;
+}
+
+.noStyle {
+	all: inherit !important;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.fill-h {
+	height: 100%;
+}
+.fill-w {
+	width: 100%;
+}
+
+.flex {
+	display: flex;
+	&-col,
+	&-row {
+		@extend .flex;
+	}
+	&-col {
+		flex-direction: column;
+		&-center {
+			@extend .flex-col;
+			justify-content: center;
+		}
+		&-centers {
+			@extend .flex-col;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	&-row {
+		flex-direction: row;
+		&-center {
+			@extend .flex-row;
+			justify-content: center;
+		}
+		&-centers {
+			@extend .flex-row;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}
+@for $i from 1 through 10 {
+	.flex-#{$i} {
+		flex: #{$i};
+	}
+}
+
+.text-base {
+	font-size: 1rem;
+	line-height: 1rem;
+}
+.text-center {
+	text-align: center;
+}
+
+$position: (
+	top: t,
+	right: r,
+	bottom: b,
+	left: l,
+); // 上 右 下 左
+// 生成 margin和padding, 使用方式 mt-10 ... mt-100 mb-10...mb-100
+@for $i from 1 through 10 {
+	@each $k, $p in $position {
+		.m#{$p}-#{$i * 10} {
+			margin-#{$k}: #{$i * 10}px;
+		}
+
+		.p#{$p}-#{$i * 10} {
+			padding-#{$k}: #{$i * 10}px;
+		}
+	}
+}
+
+//生成格式化的字体
+@for $i from 6 through 16 {
+	.font-#{$i * 2} {
+		font-size: #{$i * 2}px;
+		line-height: #{$i * 2 + 8}px;
+	}
+}
+
+// 针切为手指
+.pointer {
+	cursor: pointer;
+}
+
+.icon {
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.15em;
+	fill: currentColor;
+	overflow: hidden;
+}

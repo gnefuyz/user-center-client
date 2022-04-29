@@ -12,8 +12,8 @@ dist
 dist-ssr
 *.local
 .eslintrc-auto-import.json
-./src/types/auto-imports.d.ts
-./src/types/components.d.ts
+src/types/auto-imports.d.ts
+src/types/components.d.ts
 
 # Editor directories and files
 .vscode/*

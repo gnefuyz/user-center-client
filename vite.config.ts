@@ -4,16 +4,61 @@ import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver, ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 import eslintPlugin from 'vite-plugin-eslint'
+import { resolve } from 'path'
+
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir)
+}
+
+/**
+ * 配置环境变量
+ */
+Object.assign(process.env, {
+  BROWSER: 'chrome'
+})
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { name } = require('./package')
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
+  server: {
+    host: 'localhost',
+    port: 8080,
+    https: false,
+    open: true
+  },
+  build: {
+    target: 'es2019',
+    lib: {
+      name: `${name}-[name]`,
+      entry: pathResolve('./src/main.js'),
+      formats: ['umd']
+    },
+    rollupOptions: {
+      preserveEntrySignatures: 'allow-extension',
+      output: {
+        inlineDynamicImports: true,
+        chunkFileNames: `${name}-[name]-[hash].js`,
+        entryFileNames: `${name}-[name]-[hash].js`,
+        assetFileNames: `${name}-[name]-[hash].[ext]`
+      },
+      input: {
+        // 入口文件
+        main: pathResolve('index.html')
+      }
+    }
+  },
   plugins: [
     vue(),
+    // 自动导入组件
     Components({
       resolvers: [AntDesignVueResolver(), ElementPlusResolver()],
       dts: './src/types/components.d.ts'
       // dts: true,
     }),
+    // 自动导入
     AutoImport({
       include: [
         /\.vue$/,
@@ -46,6 +91,26 @@ export default defineConfig({
       resolvers: [AntDesignVueResolver(), ElementPlusResolver()],
       dts: './src/types/auto-imports.d.ts'
     }),
+    // eslint插件，规则error时弹出显示在页面上
     eslintPlugin()
-  ]
+  ],
+  resolve: {
+    alias: [
+      {
+        find: /\/#\//,
+        replacement: pathResolve('src/types/')
+      },
+      {
+        find: '@',
+        replacement: pathResolve('src/')
+      }
+    ]
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "@/assets/scss/index.scss";' // 添加公共样式
+      }
+    }
+  }
 })

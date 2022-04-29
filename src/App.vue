@@ -5,9 +5,7 @@
   <el-button>hhDD111DDh</el-button>
 </template>
 
-<script setup lang="ts">
-const name = '666'
-</script>
+<script setup lang="ts"></script>
 
 <style>
 #app {
