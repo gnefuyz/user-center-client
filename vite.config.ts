@@ -34,15 +34,15 @@ export default defineConfig({
     lib: {
       name: `${name}-[name]`,
       entry: pathResolve('./src/main.js'),
-      formats: ['umd']
+      formats: ['es']
     },
     rollupOptions: {
       preserveEntrySignatures: 'allow-extension',
       output: {
         inlineDynamicImports: true,
-        chunkFileNames: `${name}-[name]-[hash].js`,
-        entryFileNames: `${name}-[name]-[hash].js`,
-        assetFileNames: `${name}-[name]-[hash].[ext]`
+        chunkFileNames: `${name}-[name]-[chunkhash].js`,
+        entryFileNames: `${name}-[name]-[chunkhash].js`,
+        assetFileNames: `${name}-[name]-[chunkhash].[ext]`
       },
       input: {
         // 入口文件
