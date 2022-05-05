@@ -54,7 +54,7 @@ export default defineConfig({
     vue(),
     // 自动导入组件
     Components({
-      resolvers: [AntDesignVueResolver(), ElementPlusResolver()],
+      resolvers: [AntDesignVueResolver({ resolveIcons: true }), ElementPlusResolver()],
       dts: './src/types/components.d.ts'
       // dts: true,
     }),
@@ -62,13 +62,16 @@ export default defineConfig({
     AutoImport({
       include: [
         /\.vue$/,
-        /\.vue\?vue/ // .vue
+        /\.vue\?vue/, // .vue
+        /\.ts$/
       ],
       imports: [
         'vue',
+        'vue-router',
         {
           // 若不加这一句，自动生成的eslintrc文件没有将defineProps和defineEmits加入，会导致eslint报错，所以在这里重新声明一遍
           vue: ['defineProps', 'defineEmits'],
+          'vue-router': ['createRouter', 'createWebHistory'],
           '@vueuse/core': [
             // named imports
             'useMouse', // import { useMouse } from '@vueuse/core',
