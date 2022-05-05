@@ -1,10 +1,9 @@
+import projectSetting from '@/settings/projectSetting'
 import { Router, RouteMeta } from 'vue-router'
 
 const getPageTitle = (routeMate: RouteMeta) => {
-  if (routeMate?.title) {
-    return routeMate.title
-  }
-  return '用户中心'
+  const title = routeMate?.title || '用户中心'
+  return `${title}-${projectSetting.name}`
 }
 
 export default function createRouterGuards(router: Router) {

@@ -6,10 +6,9 @@ export const basicRouters: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Root',
-    redirect: '/dashboard',
+    redirect: '/login',
     meta: {
-      show: false,
-      title: '数据看板'
+      show: false
     }
   },
   {
@@ -20,6 +19,9 @@ export const basicRouters: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'Login',
+    meta: {
+      title: '登录'
+    },
     component: () => import('@/views/login/loginView.vue')
   }
 ]
