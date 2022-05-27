@@ -4,5 +4,5 @@
  * @Description: null
  -->
 <template>
-  <div>homePage</div>
+  <div class="container">home page</div>
 </template>

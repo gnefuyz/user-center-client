@@ -27,7 +27,11 @@
               }
             ]"
           >
-            <a-input-password v-model:value="formState.password" placeholder="password">
+            <a-input-password
+              v-model:value="formState.password"
+              placeholder="password"
+              autocomplete="off"
+            >
               <template #prefix>
                 <LockOutlined />
               </template>
@@ -58,8 +62,7 @@ interface FormState {
 </script>
 
 <script lang="ts" setup>
-import AES from 'crypto-js/aes'
-import MD5 from 'crypto-js/hmac-md5'
+import { HmacMD5, AES } from 'crypto-js'
 
 const loading = ref(false)
 const formState: FormState = reactive({
@@ -69,8 +72,8 @@ const formState: FormState = reactive({
 })
 
 function handleLogin(form: FormState) {
-  const pwd2md = MD5(form.password, '美尚素材中心').toString()
-  const md2aes = AES.encrypt(pwd2md, '666').toString()
+  const pwd2md = HmacMD5(form.password, '美尚素材中心').toString()
+  const md2aes = AES.encrypt(pwd2md, form.username).toString()
   let params = {
     username: form.username,
     password: md2aes
